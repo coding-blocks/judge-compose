@@ -1,0 +1,33 @@
+version: '3'
+services:
+#  api:
+#    image: codingblocks/judge-api
+#    ports:
+#    - "3838:3838"
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    environment:
+      - RABBITMQ_DEFAULT_USER=codingblocks
+      - RABBITMQ_DEFAULT_PASS=codingblocks
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  taskmaster:
+    image: codingblocks/judge-taskmaster
+    depends_on:
+      - rabbitmq
+    environment:
+      - AMQP_USER=codingblocks
+      - AMQP_PASS=codingblocks
+      - AMQP_HOST=rabbitmq
+      - AMQP_PORT=5672
+
+  worker-c:
+    image: codingblocks/judge-worker-c
+  worker-java8:
+    image: codingblocks/judge-worker-java8
+  worker-cpp:
+    image: codingblocks/judge-worker-cpp
+  worker-py2:
+    image: codingblocks/judge-worker-py2
