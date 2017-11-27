@@ -4,16 +4,15 @@ import chai = require('chai')
 import chaiString = require('chai-string')
 chai.use(chaiString)
 
-describe('judge-api:/api/runs [Language: C++]', () => {
+describe('judge-api:/api/runs [Language: C]', () => {
 
     it('POST: Correct submission works', (done) => {
         let source = `
-#include <iostream>
-using namespace std;
+#include <stdio.h>
 int main () {
     char in[10];
-    cin>>in;
-    cout<<"Hello "<<in;
+    scanf("%s", in);
+    printf("Hello %s", in);
     return 0;
 }
 `
@@ -23,7 +22,7 @@ int main () {
             {
                 json: {
                     source: (new Buffer(source).toString('base64')),
-                    lang: 'cpp',
+                    lang: 'c',
                     stdin: (new Buffer(stdin).toString('base64'))
                 }
             },
@@ -35,21 +34,21 @@ int main () {
             })
     })
     it('POST: Compilation error is in stderr', (done) => {
-        let source = 'SOME GARBAGE THAT IS NOT VALID CPP SOURCE'
+        let source = 'SOME GARBAGE THAT IS NOT VALID C SOURCE'
         let stdin = 'World'
 
         request.post(`http://${process.env.JUDGEAPI_HOST}:${process.env.JUDGEAPI_PORT}/api/runs`,
             {
                 json: {
                     source: (new Buffer(source).toString('base64')),
-                    lang: 'cpp',
+                    lang: 'c',
                     stdin: (new Buffer(stdin).toString('base64'))
                 }
             },
             (err, resp, body) => {
                 expect(body.stdout).to.eq('')
                 let stderr = (new Buffer(body.stderr, 'base64')).toString()
-                expect(stderr).to.startWith('source.cpp:1:1: error')
+                expect(stderr).to.startWith('source.c:1:1: error:')
                 done()
             })
     })
