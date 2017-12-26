@@ -1,7 +1,7 @@
 group: travis_latest
 sudo: required
 language: nodejs
-nodejs:
+node_js:
  - '8'
 env:
   DOCKER_COMPOSE_VERSION: 1.16.1
