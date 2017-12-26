@@ -16,6 +16,7 @@ before_install:
 
 install:
   - npm install -D
+  - cp judgeapi-example.env .env
 
 before_script:
   - docker-compose up -d
