@@ -5,6 +5,8 @@ node_js:
  - "8"
 env:
   DOCKER_COMPOSE_VERSION: 1.16.1
+  JUDGEAPI_HOST: localhost
+  JUDGEAPI_PORT: 3737
 
 before_install:
   - sudo apt-get update
