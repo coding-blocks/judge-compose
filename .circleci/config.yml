@@ -6,19 +6,14 @@ version: 2
 machine:
   services:
     - docker
-
 jobs:
   build:
     docker:
       # specify the version you desire here
       - image: circleci/node:8.9
-
-
     working_directory: ~/repo
-
     steps:
       - checkout
-
       # Download and cache dependencies
       - restore_cache:
           keys:
@@ -31,19 +26,14 @@ jobs:
             curl -L https://github.com/docker/compose/releases/download/1.11.2/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
             chmod +x ~/docker-compose
             sudo mv ~/docker-compose /usr/local/bin/docker-compose
-
       - run:
         - npm install -D
         - docker-compose up -d
         - "./wait-for-it.sh -t 60 localhost:3737"
-
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-
       # run tests!
       - run:
        - npm run test
-
-
