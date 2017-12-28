@@ -19,7 +19,8 @@ install:
   - cp judgeapi-example.env .env
 
 before_script:
-  - travis_wait 2 docker-compose up -d
+  - docker-compose up -d
+  - "./wait-for-it.sh -t 60 localhost:3737"
 
 script:
   - npm run test
