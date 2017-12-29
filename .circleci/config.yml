@@ -26,9 +26,9 @@ jobs:
           command: |
             npm install -D
       - run:
-          name: CURL
+          name: Status
           command: |
-            curl 0.0.0.0:3737
+            docker ps -a
       - run:
           name: Run Tests
-          command: JUDGEAPI_HOST=127.0.0.1 JUDGEAPI_PORT=3737 npm run test
+          command: JUDGEAPI_HOST=0.0.0.0 JUDGEAPI_PORT=3737 npm run test
