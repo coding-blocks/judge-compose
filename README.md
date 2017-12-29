@@ -14,6 +14,13 @@ It has 3 endpoints -
  - /api/submissions (to evaluate testcases)
  - /api/langs (to show supported languages)
 
+### `postgres` : A PostgreSQL 9.6 DB
+Standard postgres image
+Use `docker-compose-withdb.yml` if you want a new docker based DB
+created as part of the judge deployment
+
+Use `docker-compose.yml` to use your own DB (If you have your own db server)
+
 ### `rabbitmq` : An AMQP queue
 Standard rabbitmq server to create queue of tasks
 
@@ -30,7 +37,7 @@ Available workers -
  - cpp
  - c
  - java8
- - 
+ - py2
 
 ## Running
 
@@ -41,7 +48,7 @@ Step 1:
 
 Step 2:  
 ```bash
-docker-compose up
+docker-compose -f docker-compose-withdb.yml up
 ```
 
 ### Environment Variables
