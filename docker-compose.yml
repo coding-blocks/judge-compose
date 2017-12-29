@@ -8,15 +8,6 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
-  api:
-    image: codingblocks/judge-api
-    depends_on:
-      - rabbitmq
-    ports:
-    - "3737:3737"
-    env_file:
-      - .env
-
   taskmaster:
     image: codingblocks/judge-taskmaster
     volumes:
@@ -24,6 +15,15 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock"
     depends_on:
       - rabbitmq
+    env_file:
+      - .env
+
+  api:
+    image: codingblocks/judge-api
+    depends_on:
+      - taskmaster
+    ports:
+    - "3737:3737"
     env_file:
       - .env
 
@@ -35,3 +35,12 @@ services:
     image: codingblocks/judge-worker-cpp
   worker-py2:
     image: codingblocks/judge-worker-py2
+
+#  test:
+#    build: ./test_docker
+#    image: judgeapi_test
+#    depends_on:
+#      - api
+#    env_file:
+#      - .env
+

@@ -26,9 +26,8 @@ install:
 
 before_script:
   - psql -c 'create database judgeapi;' -U postgres
-  - docker-compose up -d
-  - docker ps -a
-  - awk 'END{print $1}' /etc/hosts
+  - docker-compose -p judgecompose up -d
+  - docker build test_docker -t judgecompose_test
 
 script:
-  - JUDGEAPI_HOST=$(awk 'END{print $1}' /etc/hosts) npm run test
+  - docker run -t --network=judgecompose_default judgecompose_test:latest

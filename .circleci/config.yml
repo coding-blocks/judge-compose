@@ -20,16 +20,11 @@ jobs:
           name: Docker Compose
           command: |
             cp judgeapi-example.env .env
-            docker-compose up -d
+            docker-compose -p judgecompose up -d
       - run:
-          name: NPM Install and Prepare
+          name: Build Tests
           command: |
-            npm install -D
-      - run:
-          name: Status
-          command: |
-            docker ps -a
-            awk 'END{print $1}' /etc/hosts
+            docker build test_docker -t judgecompose_test
       - run:
           name: Run Tests
-          command: DEBUG=test:* JUDGEAPI_HOST=$(awk 'END{print $1}' /etc/hosts) JUDGEAPI_PORT=3737 npm run test
+          command: docker run -t --network=judgecompose_default judgecompose_test:latest
