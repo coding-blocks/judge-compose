@@ -4,7 +4,6 @@ machine:
     - docker
 jobs:
   build:
-    working_directory: /app
     docker:
       # specify the version you desire here
       - image: circleci/node:8.9
@@ -17,11 +16,6 @@ jobs:
             curl -L https://github.com/docker/compose/releases/download/1.17.1/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
             chmod +x ~/docker-compose
             sudo mv ~/docker-compose /usr/local/bin/docker-compose
-      - restore_cache:
-          keys:
-            - v1-{{ .Branch }}
-          paths:
-            - /caches/app.tar
       - run:
           name: Docker Compose
           command: |
