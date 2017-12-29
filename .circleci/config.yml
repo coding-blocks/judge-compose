@@ -32,4 +32,4 @@ jobs:
             awk 'END{print $1}' /etc/hosts
       - run:
           name: Run Tests
-          command: DEBUG=test:* JUDGEAPI_HOST=localhost JUDGEAPI_PORT=3737 npm run test
+          command: DEBUG=test:* JUDGEAPI_HOST=$(awk 'END{print $1}' /etc/hosts) JUDGEAPI_PORT=3737 npm run test

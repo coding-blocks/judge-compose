@@ -31,4 +31,4 @@ before_script:
   - awk 'END{print $1}' /etc/hosts
 
 script:
-  - npm run test
+  - JUDGEAPI_HOST=$(awk 'END{print $1}' /etc/hosts) npm run test
