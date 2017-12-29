@@ -26,7 +26,7 @@ install:
 before_script:
   - psql -c 'create database judgeapi;' -U postgres
   - docker-compose up&
-  - "./wait-for localhost:3737 -t 60"
+  - "./wait-for.sh localhost:3737 -t 60"
 
 script:
   - npm run test
