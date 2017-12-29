@@ -21,11 +21,14 @@ jobs:
           command: |
             cp judgeapi-example.env .env
             docker-compose -f docker-compose-withdb.yml -p judgecompose up -d
-            docker exec judgecompose_api_1 npm run seedlangs
       - run:
           name: Build Tests
           command: |
             docker build test_docker -t judgecompose_test
+      - run:
+          name: Seed Language Data
+          command: |
+            docker exec judgecompose_api_1 npm run seedlangs
       - run:
           name: Run Tests
           command: docker run -t --network=judgecompose_default judgecompose_test:latest
