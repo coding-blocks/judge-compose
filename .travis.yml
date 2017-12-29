@@ -16,7 +16,6 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
 
 install:
-  - npm install -D
   - cp judgeapi-example.env .env
 
 before_script:
