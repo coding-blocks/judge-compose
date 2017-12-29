@@ -8,10 +8,10 @@ jobs:
       # specify the version you desire here
       - image: circleci/node:8.9
       - image: postgres:9.6
-         environment:
-         - POSTGRES_USER=judge
-         - POSTGRES_DB=judgeapi
-         - POSTGRES_PASSWORD=judge
+        environment:
+        - POSTGRES_USER=judge
+        - POSTGRES_DB=judgeapi
+        - POSTGRES_PASSWORD=judge
     steps:
       - checkout
       - setup_remote_docker
