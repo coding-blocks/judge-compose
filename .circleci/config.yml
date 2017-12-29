@@ -27,4 +27,4 @@ jobs:
             npm install -D
       - run:
           name: Run Tests
-          command: JUDGEAPI_HOST=api JUDGEAPI_PORT=3737 npm run test
+          command: JUDGEAPI_HOST=127.0.0.1 JUDGEAPI_PORT=3737 npm run test
