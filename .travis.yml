@@ -20,7 +20,7 @@ install:
   - cp judgeapi-example.env .env
 
 before_script:
-  - docker-compose -p judgecompose up -d
+  - docker-compose  -f docker-compose-withdb.yml -p judgecompose up -d
   - docker build test_docker -t judgecompose_test
 
 script:

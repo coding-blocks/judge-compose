@@ -20,7 +20,7 @@ jobs:
           name: Docker Compose
           command: |
             cp judgeapi-example.env .env
-            docker-compose -p judgecompose up -d
+            docker-compose -f docker-compose-withdb.yml -p judgecompose up -d
       - run:
           name: Build Tests
           command: |

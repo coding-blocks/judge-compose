@@ -1,0 +1,54 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:9.6
+    environment:
+      - POSTGRES_USER=judgeapi
+      - POSTGRES_PASSWORD=judgeapi
+      - POSTGRES_DB=judgeapi-dev
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    environment:
+      - RABBITMQ_DEFAULT_USER=codingblocks
+      - RABBITMQ_DEFAULT_PASS=codingblocks
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+  taskmaster:
+    image: codingblocks/judge-taskmaster
+    volumes:
+      - "/tmp/runbox:/tmp/runbox"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    depends_on:
+      - rabbitmq
+    env_file:
+      - .env
+
+  api:
+    image: codingblocks/judge-api
+    depends_on:
+      - taskmaster
+      - postgres
+    ports:
+    - "3737:3737"
+    env_file:
+      - .env
+
+  worker-c:
+    image: codingblocks/judge-worker-c
+  worker-java8:
+    image: codingblocks/judge-worker-java8
+  worker-cpp:
+    image: codingblocks/judge-worker-cpp
+  worker-py2:
+    image: codingblocks/judge-worker-py2
+
+#  test:
+#    build: ./test_docker
+#    image: judgeapi_test
+#    depends_on:
+#      - api
+#    env_file:
+#      - .env
+
