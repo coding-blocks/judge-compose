@@ -29,6 +29,7 @@ jobs:
           name: Status
           command: |
             docker ps -a
+            awk 'END{print $1}' /etc/hosts
       - run:
           name: Run Tests
-          command: DEBUG=test:* JUDGEAPI_HOST=0.0.0.0 JUDGEAPI_PORT=3737 npm run test
+          command: DEBUG=test:* JUDGEAPI_HOST=localhost JUDGEAPI_PORT=3737 npm run test

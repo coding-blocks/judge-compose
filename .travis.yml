@@ -8,7 +8,7 @@ addons:
 env:
   global:
     - DOCKER_COMPOSE_VERSION=1.16.1
-    - JUDGEAPI_HOST=0.0.0.0
+    - JUDGEAPI_HOST=localhost
     - JUDGEAPI_PORT=3737
     - DEBUG=test:*
 
@@ -28,6 +28,7 @@ before_script:
   - psql -c 'create database judgeapi;' -U postgres
   - docker-compose up -d
   - docker ps -a
+  - awk 'END{print $1}' /etc/hosts
 
 script:
   - npm run test
