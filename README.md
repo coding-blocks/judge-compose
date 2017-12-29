@@ -1,4 +1,6 @@
 # CodingBlocks Judge v2
+[![CircleCI](https://img.shields.io/circleci/project/github/coding-blocks/judge-compose.svg)](https://circleci.com/gh/coding-blocks/judge-compose)
+[![Travis](https://img.shields.io/travis/coding-blocks/judge-compose.svg?style=flat-square)](https://travis-ci.org/coding-blocks/judge-compose)
 
 This is CodingBlocks' new code judge
 
