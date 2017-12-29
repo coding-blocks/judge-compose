@@ -3,8 +3,13 @@ sudo: required
 language: node_js
 node_js:
  - "8"
+addons:
+  postgresql: "9.6"
 env:
-  - DOCKER_COMPOSE_VERSION=1.16.1 JUDGEAPI_HOST=localhost JUDGEAPI_PORT=3737
+  global:
+    - DOCKER_COMPOSE_VERSION=1.16.1
+    - JUDGEAPI_HOST=localhost
+    - JUDGEAPI_PORT=3737
 
 before_install:
   - sudo apt-get update
@@ -16,10 +21,12 @@ before_install:
 
 install:
   - npm install -D
-  - cp judgeapi-example.env .env
+  - cp judgeapi-travis.env .env
 
 before_script:
-  - docker-compose up -d
+  - psql -c 'create database judgeapi;' -U postgres
+  - docker-compose up&
+  - "./wait-for localhost:3737 -t 60"
 
 script:
   - npm run test
