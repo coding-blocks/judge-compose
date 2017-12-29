@@ -31,4 +31,4 @@ jobs:
             docker ps -a
       - run:
           name: Run Tests
-          command: JUDGEAPI_HOST=0.0.0.0 JUDGEAPI_PORT=3737 npm run test
+          command: DEBUG=test:* JUDGEAPI_HOST=0.0.0.0 JUDGEAPI_PORT=3737 npm run test
