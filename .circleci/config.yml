@@ -28,8 +28,7 @@ jobs:
       - run:
           name: CURL
           command: |
-            "curl 127.0.0.1:3737"
-            "curl localhost:3737"
+            curl localhost:3737
       - run:
           name: Run Tests
           command: JUDGEAPI_HOST=127.0.0.1 JUDGEAPI_PORT=3737 npm run test
