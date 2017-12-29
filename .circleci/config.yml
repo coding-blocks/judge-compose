@@ -11,6 +11,10 @@ jobs:
       - checkout
 #      - setup_remote_docker
       - run:
+          name: Install Docker
+          command: |
+            apk add --no-cache docker
+      - run:
           name: Install Docker Compose
           command: |
             curl -L https://github.com/docker/compose/releases/download/1.17.1/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
