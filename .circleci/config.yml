@@ -18,14 +18,13 @@ jobs:
             sudo mv ~/docker-compose /usr/local/bin/docker-compose
       - run:
           name: Docker Compose
-          pwd: $HOME/project
           command: |
+            cp judgeapi-example.env .env
             docker-compose up -d
       - run:
           name: NPM Install and Prepare
           command: |
             npm install -D
-            cp judgeapi-example.env .env
       - run:
           name: Run Tests
           command: JUDGEAPI_HOST=localhost JUDGEAPI_PORT=3737 npm run test
