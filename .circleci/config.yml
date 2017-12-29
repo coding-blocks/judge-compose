@@ -1,23 +1,31 @@
-# Javascript Node CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-javascript/ for more details
-#
 version: 2
-machine:
-  services:
-    - docker
 jobs:
   build:
+    working_directory: /app
     docker:
-      # specify the version you desire here
-      - image: circleci/node:8.9
-    working_directory: ~/repo
+      - image: docker:17.05.0-ce-git
     steps:
       - checkout
-      # Download and cache dependencies
+      - setup_remote_docker
       - run:
-          name: Install Docker Compose
+          name: Install dependencies
           command: |
-            curl -L https://github.com/docker/compose/releases/download/1.11.2/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
-            chmod +x ~/docker-compose
-            sudo mv ~/docker-compose /usr/local/bin/docker-compose
+            apk add --no-cache py-pip=9.0.0-r1 nodejs=8.9.3-r1
+            pip install docker-compose==1.17.1
+      - restore_cache:
+          keys:
+            - v1-{{ .Branch }}
+          paths:
+            - /caches/app.tar
+      - run:
+          name: Docker Compose
+          command: |
+            docker-compose up -d
+      - run:
+          name: NPM Install and Prepare
+          command: |
+            npm install -D
+            cp judgeapi-example.env .env
+      - test:
+          name: Run Tests
+          command: JUDGEAPI_HOST=localhost JUDGEAPI_PORT=3737 npm run test
