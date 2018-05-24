@@ -1,8 +1,15 @@
 import * as request from 'request'
 import {expect} from 'chai'
 import * as debug from 'debug'
+import {CoreOptions} from 'request'
 
 const log = debug('test:api:langs')
+const reqOptions: CoreOptions = {
+  baseUrl: `http://${process.env.JUDGEAPI_HOST}:${process.env.JUDGEAPI_PORT}/`,
+  headers: {
+    'Authorization': 'Bearer 7718330d2794406c980bdbded6c9dc1d'
+  }
+}
 
 describe('judge-api:/api/langs', () => {
   describe('GET', () => {
@@ -10,7 +17,7 @@ describe('judge-api:/api/langs', () => {
     let lang_slugs = []
 
     before(done => {
-      request.get(`http://${process.env.JUDGEAPI_HOST}:${process.env.JUDGEAPI_PORT}/api/langs`,
+      request.get('/api/langs', reqOptions,
         (err, resp, bodyStr) => {
           if (err) throw err
 
