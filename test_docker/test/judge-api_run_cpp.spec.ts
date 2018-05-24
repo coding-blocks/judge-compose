@@ -3,9 +3,17 @@ import {expect} from 'chai'
 import chai = require('chai')
 import chaiString = require('chai-string')
 import * as debug from 'debug'
+import {CoreOptions} from 'request'
 
 const log = debug('test:api:langs')
 chai.use(chaiString)
+
+const reqOptions: CoreOptions = {
+  baseUrl: `http://${process.env.JUDGEAPI_HOST}:${process.env.JUDGEAPI_PORT}/`,
+  headers: {
+    'Authorization': 'Bearer 7718330d2794406c980bdbded6c9dc1d'
+  }
+}
 
 describe('judge-api:/api/runs [Language: C++]', () => {
 
@@ -22,7 +30,7 @@ int main () {
 `
     let stdin = 'World'
 
-    request.post(`http://${process.env.JUDGEAPI_HOST}:${process.env.JUDGEAPI_PORT}/api/runs`,
+    request.post(`/api/runs`, reqOptions,
       {
         json: {
           source: (new Buffer(source).toString('base64')),
@@ -42,7 +50,7 @@ int main () {
     let source = 'SOME GARBAGE THAT IS NOT VALID CPP SOURCE'
     let stdin = 'World'
 
-    request.post(`http://${process.env.JUDGEAPI_HOST}:${process.env.JUDGEAPI_PORT}/api/runs`,
+    request.post(`/api/runs`, reqOptions,
       {
         json: {
           source: (new Buffer(source).toString('base64')),
