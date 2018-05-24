@@ -29,14 +29,14 @@ int main () {
 `
     let stdin = 'World'
 
-    request.post(`/api/runs`, reqOptions,
+    request.post(`/api/runs`, Object.assign(reqOptions,
       {
         json: {
           source: (new Buffer(source).toString('base64')),
           lang: 'c',
           stdin: (new Buffer(stdin).toString('base64'))
         }
-      },
+      }),
       (err, resp, body) => {
         log(body)
         expect(body.stderr).to.eq('')
@@ -49,14 +49,14 @@ int main () {
     let source = 'SOME GARBAGE THAT IS NOT VALID C SOURCE'
     let stdin = 'World'
 
-    request.post(`/api/runs`, reqOptions,
+    request.post(`/api/runs`, Object.assign(reqOptions,
       {
         json: {
           source: (new Buffer(source).toString('base64')),
           lang: 'c',
           stdin: (new Buffer(stdin).toString('base64'))
         }
-      },
+      }),
       (err, resp, body) => {
         log(body)
         expect(body.stdout).to.eq('')
