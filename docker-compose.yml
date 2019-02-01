@@ -35,6 +35,8 @@ services:
     image: codingblocks/judge-worker-cpp
   worker-py2:
     image: codingblocks/judge-worker-py2
+  worker-csv:
+    image: codingblocks/judge-worker-csv
 
 #  test:
 #    build: ./test_docker
