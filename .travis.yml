@@ -21,7 +21,7 @@ install:
 before_script:
   - docker-compose  -f docker-compose-withdb.yml -p judgecompose up -d
   - docker build test_docker -t judgecompose_test
-  - docker exec judgecompose_api_1 npm run seedlangs
+  - docker exec judgecompose_api_1 scripts/wait-for-it.sh -t 180 api:3737 -- npm run seedlangs
 
 script:
   - docker run -t --network=judgecompose_default judgecompose_test:latest
