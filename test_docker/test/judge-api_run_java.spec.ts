@@ -26,7 +26,7 @@ public class Main{
 	public static void main (String[] args) throws java.lang.Exception {
 		Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
-        System.out.println("Hello " + input);
+        System.out.print("Hello " + input);
 	}
 }
 `
@@ -64,7 +64,7 @@ public class Main{
         log(body)
         expect(body.stdout).to.eq('')
         let stderr = (new Buffer(body.stderr, 'base64')).toString()
-        expect(stderr).to.startWith('Main.java:1: error:')
+        expect(stderr).to.startWith('source.c:1:1: error:')
         done()
       })
   })
